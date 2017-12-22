@@ -7,10 +7,10 @@ require('module-alias/register');
 var app = require('../main');
 var debug = require('debug')('api:server');
 var http = require('http');
-var log = require('log');
+var log = require('@common/log');
 var art = require('ascii-art');
-var serverMessages = require('../server/messages');
-var serverCodes = require('../server/codes');
+var serverMessages = require('@common/messages');
+var serverCodes = require('@common/codes');
 /**
  * Get port from environment and store in Express.
  */
@@ -31,6 +31,7 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+
 //Requiring routes
 require('../routes/router')(app);
 /**
@@ -74,9 +75,10 @@ app.use(function (err, req, res, next) {
     success: false
   });
 });
-process.on('uncaughtException', function (err) {
-  log('Caught exception: ' + err);
-});
+
+// process.on('uncaughtException', function (err) {
+//   log('Caught exception: ' + err);
+// });
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
@@ -140,3 +142,4 @@ function onListening() {
   log("Server Running on port " + app.get('port'));
   log("###########################################################################");
 }
+
