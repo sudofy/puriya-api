@@ -1,10 +1,10 @@
 var User = require('./user.model.js');
 var passport = require('passport');
-var Verify = require('../../server/verify');
-var log = require('log');
-var auth = require('../../server/auth');
-var serverCodes = require('../../server/codes');
-var serverMessages = require('../../server/messages');
+var Verify = require('@common/verify');
+var log = require('@common/log');
+var auth = require('@common/auth');
+var serverCodes = require('@common/codes');
+var serverMessages = require('@common/messages');
 exports.listAll = function (req, res, next) {
     User.find({}, function (err, users) {
         if (err) {
@@ -27,7 +27,7 @@ exports.listAll = function (req, res, next) {
     });
 };
 
-exports.register = function (req, res) {
+exports.register = function (req, res, next) {
     if (!req.body.username || !req.body.password) {
         return next({
             message: serverMessages.server.MISSING_FORM_DATA_ERROR,
@@ -96,13 +96,13 @@ exports.login = function (req, res, next) {
         }
 
         req.logIn(user, function (err) {
-
+            log(err)
 
             if (err) {
 
                 return next({
                     message: serverMessages.user.ERROR_CAN_NOT_LOGIN,
-                    data: null
+                    data: err
                 });
             }
 
@@ -110,7 +110,7 @@ exports.login = function (req, res, next) {
 
                 function (data) {
 
-
+                    log(user)
                     return res.json({
                         message: serverMessages.user.SUCCESS_LOGIN,
                         success: true,
@@ -131,7 +131,7 @@ exports.login = function (req, res, next) {
     })(req, res, next);
 };
 
-exports.verifyUser = function (req, res) {
+exports.verifyUser = function (req, res, next) {
     log(req._user);
     User.findById(req._user._id, function (err, user) {
         if (err) {
@@ -166,7 +166,7 @@ exports.verifyUser = function (req, res) {
     });
 };
 
-exports.logout = function (req, res) {
+exports.logout = function (req, res, next) {
     req.logout();
     res.json({
         message: serverMessages.user.SUCCESS_LOGOUT,

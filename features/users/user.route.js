@@ -2,9 +2,9 @@ var express = require('express');
 
 var router = express.Router();
 
-var log = require('log');
+var log = require('@common/log');
 
-var verify = require('../../server/verify');
+var verify = require('@common/verify');
 
 var userCtrl = require('./user.ctrl.js');
 
