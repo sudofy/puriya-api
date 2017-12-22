@@ -4,11 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var database = require('./server/database');
+var database = require('@common/database');
 
 var passport = require('passport');
 var cors = require('cors');
-var log = require('log');
+var log = require('@common/log');
 
 var app = express();
 database.connect();
@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Setup Passport.js for token based user auth
-require('./server/auth');
+require('@common/auth');
 app.use(passport.initialize());
 
 
