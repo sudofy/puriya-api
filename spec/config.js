@@ -1,4 +1,5 @@
-var config = require('../config/config');
-const frisby = require('frisby');
+var config = require('@config/config');
 
-const domain = `http://localhost:3000`;
+module.exports = {
+    domain: `http://localhost:3000/api`
+}
