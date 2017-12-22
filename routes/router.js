@@ -1,8 +1,8 @@
 var express = require('express');
 
-var log = require('log');
+var log = require('@common/log');
 
-var verify = require('../server/verify');
+var verify = require('@common/verify');
 
 // default user route Import
 var user = require('../features/users/user.route');
