@@ -1,5 +1,5 @@
 
-var log = require('@commons/log');
+var log = require('@common/log');
 
 var mongoose = require('mongoose');
 

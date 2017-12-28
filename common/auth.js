@@ -3,7 +3,7 @@ var passport = require('passport');
 var Iron = require('iron');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../features/users/user.model');
-var config = require('@config/config');
+var config = require('@config');
 var verify = require('@common/verify');
 var Q = require('q');
 

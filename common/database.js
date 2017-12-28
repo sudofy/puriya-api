@@ -1,4 +1,4 @@
-var config = require('@config/config');
+var config = require('@config');
 var mongoose = require('mongoose');
 var log = require('tracer').console({ format: "{{message}}  - {{file}}:{{line}}" }).log;
 

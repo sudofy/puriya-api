@@ -1,7 +1,7 @@
 var User = require('../features/users/user.model');
 var jwt = require('jsonwebtoken');
 var Iron = require('iron');
-var config = require('@config/config');
+var config = require('@config');
 var log = require('tracer').console({ format: "{{message}}  - {{file}}:{{line}}" }).log;
 
 exports.getToken = function (user, expiresIn) {
