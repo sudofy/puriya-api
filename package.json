@@ -5,7 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "debug": "nodemon ./bin/www",
-    "test": "node_modules/.bin/jasmine spec/*.spec.js "
+    "test": "node_modules/.bin/jasmine spec/*.spec.js ",
+    "pretest": "node spec/migration.js",
+    "posttest": "node spec/migration.js"
   },
   "_moduleAliases": {
     "@common": "./common/",

@@ -32,8 +32,7 @@ describe("User Login :", () => {
       .done();
 
   });
-});
-describe("User Login :", () => {
+
   it("it should  fail to login the user with username missing", () => {
     frisby
       .post(config.domain + '/user/login', {
@@ -43,8 +42,7 @@ describe("User Login :", () => {
       .done();
 
   });
-});
-describe("User Login :", () => {
+
   it("it should  fail to login the user with password missing", () => {
     frisby
       .post(config.domain + '/user/login', {

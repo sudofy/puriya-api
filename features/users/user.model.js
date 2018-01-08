@@ -1,6 +1,4 @@
 
-var log = require('@common/log');
-
 var mongoose = require('mongoose');
 
 var Schema = mongoose.Schema;

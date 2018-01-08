@@ -110,7 +110,7 @@ exports.login = function (req, res, next) {
 
         function (data) {
 
-          log(user)
+
           return res.json({
             message: serverMessages.user.SUCCESS_LOGIN,
             success: true,
@@ -132,7 +132,7 @@ exports.login = function (req, res, next) {
 };
 
 exports.verifyUser = function (req, res, next) {
-  log(req._user);
+
   User.findById(req._user._id, function (err, user) {
     if (err) {
       return next({
