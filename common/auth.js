@@ -1,10 +1,10 @@
-var log = require('tracer').console({format : "{{message}}  - {{file}}:{{line}}"}).log;
+var log = require('tracer').console({ format: "{{message}}  - {{file}}:{{line}}" }).log;
 var passport = require('passport');
 var Iron = require('iron');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../features/users/user.model');
-var config = require('../config/config');
-var verify = require('./verify');
+var config = require('@config');
+var verify = require('@common/verify');
 var Q = require('q');
 
 //Setup Local Login Strategy
@@ -26,7 +26,9 @@ exports.getLoginData = function (user, expiry) {
     if (err) {
       deferred.reject(err);
     }
-    var token = verify.getToken({data: sealed}, expiry || "30 days");
+    log(sealed);
+    log(err);
+    var token = verify.getToken({ data: sealed }, expiry || "30 days");
     var data = {
       token: token,
       user: userData

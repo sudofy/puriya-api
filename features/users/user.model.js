@@ -1,58 +1,55 @@
 
-    var log = require('tracer').console({format: "{{message}}  - {{file}}:{{line}}"}).log;
+var mongoose = require('mongoose');
 
-    var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-    var Schema = mongoose.Schema;
+var passportLocalMongoose = require('passport-local-mongoose');
 
-    var passportLocalMongoose = require('passport-local-mongoose');
 
-    
-    var User = new Schema({
+var User = new Schema({
 
-        username: String,
+  username: String,
 
-        password: String,
+  password: String,
 
-        OauthId: String,
+  OauthId: String,
 
-        OauthToken: String,
+  OauthToken: String,
 
-        firstname: {
+  firstname: {
 
-          type: String,
+    type: String,
 
-          default: ''
+    default: ''
 
-        },
+  },
 
-        lastname: {
+  lastname: {
 
-          type: String,
+    type: String,
 
-          default: ''
+    default: ''
 
-        },
-        admin: {
+  },
+  admin: {
 
-          type: Boolean,
+    type: Boolean,
 
-          default: false
+    default: false
 
-        },
+  },
 
-        resetToken: {
+  resetToken: {
 
-          type: String,
+    type: String,
 
-          default: ''
+    default: ''
 
-        }
+  }
 
-    }
+}
 
 );
-    User.plugin(passportLocalMongoose);
+User.plugin(passportLocalMongoose);
 
-    module.exports = mongoose.model('user',User);
-    
+module.exports = mongoose.model('user', User);

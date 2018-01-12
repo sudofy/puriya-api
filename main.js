@@ -4,11 +4,11 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var database = require('./server/database');
+var database = require('@common/database');
 
 var passport = require('passport');
 var cors = require('cors');
-var log = require('tracer').console({format : "{{message}}  - {{file}}:{{line}}"}).log;
+var log = require('@common/log');
 
 var app = express();
 database.connect();
@@ -29,46 +29,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //Setup Passport.js for token based user auth
-require('./server/auth');
+require('@common/auth');
 app.use(passport.initialize());
 
-//Requiring routes
-require("./routes/router")(app);
-
-
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
-});
-
-// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.json({
-      success : false,
-      message: err.message,
-      data: err
-    });
-  });
-}
-
-// production error handler
-// no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-  res.status(err.status || 500);
-  res.json({
-    success : false,
-    message: err.message,
-    data: null
-  });
-});
 
 
 module.exports = app;

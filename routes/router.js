@@ -1,30 +1,30 @@
-   var express = require('express');
+var express = require('express');
 
-                var log = require('tracer').console({format : "{{message}}  - {{file}}:{{line}}"}).log;
+var log = require('@common/log');
 
-                var verify = require('../server/verify');
+var verify = require('@common/verify');
 
-                // default user route Import
-                var user = require('../features/users/user.route');
+// default user route Import
+var user = require('../features/users/user.route');
 
-                //----API---import
+//----API---import
 
-                
-                
-                module.exports = function (app, config, models) {
 
-                  var router = express.Router();
 
-                
-                  
-                
-                
-                //default user route
-                  router.use('/user', user);
-                  //----API----Routes   
 
-                  app.use('/api', router);
+module.exports = function (app, config, models) {
 
-                };
+  var router = express.Router();
 
-              
+
+
+
+
+  //default user route
+  router.use('/user', user);
+  //----API----Routes   
+
+  app.use('/api', router);
+
+};
+
