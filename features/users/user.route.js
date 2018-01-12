@@ -12,7 +12,7 @@ var userCtrl = require('./user.ctrl.js');
 
 //GET users 
 router.route('/')
-  .get(userCtrl.listAll);
+  .get(verify.user, userCtrl.listAll);
 
 
 //Add user 
