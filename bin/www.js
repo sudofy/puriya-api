@@ -55,7 +55,7 @@ function onListening() {
     : `port ${addr.port}`;
   debug(`Listening on  ${bind}`);
 
-  art.font(`base-codeapi    server`, `Doom`, function (rendered) {
+  art.font(`PURIYA-API`, `Doom`, function (rendered) {
     log(rendered);
   });
 
