@@ -1,14 +1,14 @@
-var winston = require('winston');
-require('winston-papertrail').Papertrail;
-//var log = require('./puriya');
-var log = require('tracer').console({ format: "{{message}}  - {{file}}:{{line}}" }).log;
-var host = 'logs6.papertrailapp.com';
-var port = 29324;
+let winston = require(`winston`);
+require(`winston-papertrail`).Papertrail;
+//let log = require(`./puriya`);
+let log = require(`tracer`).console({ format: `{{message}}  - {{file}}:{{line}}` }).log;
+let host = `logs6.papertrailapp.com`;
+let port = 29324;
 
-var nodeWinstonPapertrail = new winston.transports.Papertrail({
+let nodeWinstonPapertrail = new winston.transports.Papertrail({
   host: host,
   port: port,
-  program: 'API',
+  program: `API`,
   colorize: true,
   logFormat: function (level, message) {
     return message;
@@ -16,28 +16,27 @@ var nodeWinstonPapertrail = new winston.transports.Papertrail({
 });
 
 
-var nodeLogger = new winston.Logger({
+let nodeLogger = new winston.Logger({
   transports: [nodeWinstonPapertrail]
 });
 
 
 function productionLogs() {
-  var fileParts;
-  var fileName = ' - ';
+  let fileParts;
+  let fileName = ` - `;
   try {
-    fileParts = new Error().stack.split('\n')[2].split('/');
-    fileName = ' - ' + fileParts[fileParts.length - 1]
+    fileParts = new Error().stack.split(`\n`)[2].split(`/`);
+    fileName = ` - ${fileParts[fileParts.length - 1]}`;
+  } catch (err) {
+    //donothing
   }
-  catch (err) { }
-  nodeLogger.info(...arguments, fileName)
+  nodeLogger.info(...arguments, fileName);
 }
 
 
 //PRODUNCTION LOGS
-if (process.env.ENVIRONMENT == 'aws') {
+if (process.env.ENVIRONMENT === `aws`) {
   module.exports = productionLogs;
-}
-//DEV LOGS
-else {
-  module.exports = log
+} else {
+  module.exports = log;
 }

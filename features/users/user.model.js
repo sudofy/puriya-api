@@ -1,50 +1,32 @@
 
-var mongoose = require('mongoose');
+let mongoose = require(`mongoose`);
 
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-var passportLocalMongoose = require('passport-local-mongoose');
+let passportLocalMongoose = require(`passport-local-mongoose`);
 
 
-var User = new Schema({
+let User = new Schema({
 
   username: String,
-
   password: String,
-
   OauthId: String,
-
   OauthToken: String,
-
   firstname: {
-
     type: String,
-
-    default: ''
-
+    default: ``
   },
-
   lastname: {
-
     type: String,
-
-    default: ''
-
+    default: ``
   },
   admin: {
-
     type: Boolean,
-
     default: false
-
   },
-
   resetToken: {
-
     type: String,
-
-    default: ''
-
+    default: ``
   }
 
 }
@@ -52,4 +34,4 @@ var User = new Schema({
 );
 User.plugin(passportLocalMongoose);
 
-module.exports = mongoose.model('user', User);
+module.exports = mongoose.model(`user`, User);

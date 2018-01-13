@@ -1,30 +1,23 @@
-var express = require('express');
-
-var log = require('@common/log');
-
-var verify = require('@common/verify');
-
+let express = require(`express`);
 // default user route Import
-var user = require('../features/users/user.route');
-
-//----API---import
+let user = require(`../features/users/user.route`);
 
 
 
 
-module.exports = function (app, config, models) {
 
-  var router = express.Router();
+module.exports = function (app) {
+
+  let router = express.Router();
 
 
 
 
 
   //default user route
-  router.use('/user', user);
-  //----API----Routes   
+  router.use(`/user`, user);
 
-  app.use('/api', router);
+  app.use(`/api`, router);
 
 };
 
