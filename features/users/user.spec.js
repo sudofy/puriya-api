@@ -1,6 +1,6 @@
-require(`module-alias/register`);
-const config = require(`../../spec/config`);
-const frisby = require(`frisby`);
+require('module-alias/register');
+const config = require('../../spec/config');
+const frisby = require('frisby');
 const Joi = frisby.Joi;
 
 describe(`User register :`, () => {
