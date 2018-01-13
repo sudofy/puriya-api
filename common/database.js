@@ -1,6 +1,6 @@
-let config = require(`@config`);
-let mongoose = require(`mongoose`);
-let log = require(`tracer`).console({ format: `{{message}}  - {{file}}:{{line}}` }).log;
+let config = require('@config');
+let mongoose = require('mongoose');
+let log = require('@common/log');
 
 exports.connect = function () {
   mongoose.connect(config.mongoUrl);

@@ -1,12 +1,12 @@
-let express = require(`express`);
-let path = require(`path`);
-let logger = require(`morgan`);
-let cookieParser = require(`cookie-parser`);
-let bodyParser = require(`body-parser`);
-let database = require(`@common/database`);
+let express = require('express');
+let path = require('path');
+let logger = require('morgan');
+let cookieParser = require('cookie-parser');
+let bodyParser = require('body-parser');
+let database = require('@common/database');
 
-let passport = require(`passport`);
-let cors = require(`cors`);
+let passport = require('passport');
+let cors = require('cors');
 
 let app = express();
 database.connect();
@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, `public`)));
 
 //Setup Passport.js for token based user auth
-require(`@common/auth`);
+require('@common/auth');
 app.use(passport.initialize());
 
 

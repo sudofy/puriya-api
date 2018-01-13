@@ -1,7 +1,7 @@
 
-let jwt = require(`jsonwebtoken`);
-let Iron = require(`iron`);
-let config = require(`@config`);
+let jwt = require('jsonwebtoken');
+let Iron = require('iron');
+let config = require('@config');
 
 exports.getToken = function (user, expiresIn) {
   return jwt.sign(user, config.secretKey, {
@@ -79,7 +79,7 @@ exports.admin = function (req, res, next) {
           next();
         } else {
           res.status(403).json({
-            "message": `You are not authorized to perform this operation!`
+            'message': `You are not authorized to perform this operation!`
           });
         }
       }

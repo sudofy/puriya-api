@@ -1,4 +1,4 @@
-const usermessage = require(`../features/users/user.messages`);
+const usermessage = require('../features/users/user.messages');
 module.exports = {
   user: usermessage,
   generic: {

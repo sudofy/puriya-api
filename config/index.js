@@ -1,5 +1,5 @@
-const defaultCfg = require(`./env/default`);
-const _ = require(`lodash`);
+const defaultCfg = require('./env/default');
+const _ = require('lodash');
 const env = process.env.NODE_ENV;
 module.exports = env;
 const config = defaultCfg;

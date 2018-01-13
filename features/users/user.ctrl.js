@@ -1,10 +1,10 @@
 
-let User = require(`./user.model.js`);
-let passport = require(`passport`);
-let log = require(`@common/log`);
-let auth = require(`@common/auth`);
-let serverCodes = require(`@common/codes`);
-let serverMessages = require(`@common/messages`);
+let User = require('./user.model.js');
+let passport = require('passport');
+let log = require('@common/log');
+let auth = require('@common/auth');
+let serverCodes = require('@common/codes');
+let serverMessages = require('@common/messages');
 exports.listAll = function (req, res, next) {
   User.find({}, function (err, users) {
     if (err) {

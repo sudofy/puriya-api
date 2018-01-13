@@ -1,11 +1,11 @@
-let log = require(`tracer`).console({ format: `{{message}}  - {{file}}:{{line}}` }).log;
-let passport = require(`passport`);
-let Iron = require(`iron`);
-let LocalStrategy = require(`passport-local`).Strategy;
-let User = require(`../features/users/user.model`);
-let config = require(`@config`);
-let verify = require(`@common/verify`);
-let Q = require(`q`);
+let log = require('@common/log');
+let passport = require('passport');
+let Iron = require('iron');
+let LocalStrategy = require('passport-local').Strategy;
+let User = require('../features/users/user.model');
+let config = require('@config');
+let verify = require('@common/verify');
+let Q = require('q');
 
 //Setup Local Login Strategy
 passport.use(new LocalStrategy(User.authenticate()));

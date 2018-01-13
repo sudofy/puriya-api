@@ -3,14 +3,14 @@
 /**
  * Module dependencies.
  */
-require(`module-alias/register`);
-let app = require(`../main`);
-let debug = require(`debug`)(`api:server`);
-let http = require(`http`);
-let log = require(`@common/log`);
-let art = require(`ascii-art`);
-let serverMessages = require(`@common/messages`);
-let serverCodes = require(`@common/codes`);
+require('module-alias/register');
+let app = require('../main');
+let debug = require('debug')('api:server');
+let http = require('http');
+let log = require('@common/log');
+let art = require('ascii-art');
+let serverMessages = require('@common/messages');
+let serverCodes = require('@common/codes');
 /**
  * Get port from environment and store in Express.
  */
@@ -93,7 +93,7 @@ server.on(`error`, onError);
 server.on(`listening`, onListening);
 
 //Requiring routes
-require(`../routes/router`)(app);
+require('../routes/router')(app);
 /**
  * Normalize a port into a number, string, or false.
  */
