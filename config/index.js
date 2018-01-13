@@ -1,9 +1,10 @@
-const defaultCfg = require('./env/default');
+/*global  merge:true*/
+const defaultCfg = require(`./env/default`);
 const env = process.env.NODE_ENV;
 module.exports = env;
-const config = { ...defaultCfg };
+const config = defaultCfg;
 module.exports = config;
-if (env !== undefined) {
-    const overrides = require(`./env/${env}`).config;
-    merge(config, overrides);
+const overrides = (env !== null && typeof env !== `undefined`) ? require(`./env/${env}`).config : null;
+if (env !== null && typeof env !== `undefined`) {
+  merge(config, overrides);
 }

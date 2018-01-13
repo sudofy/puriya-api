@@ -1,38 +1,34 @@
-var express = require('express');
+let express = require(`express`);
 
-var router = express.Router();
+let router = express.Router();
 
-var log = require('@common/log');
+let verify = require(`@common/verify`);
 
-var verify = require('@common/verify');
-
-var userCtrl = require('./user.ctrl.js');
-
-
+let userCtrl = require(`./user.ctrl.js`);
 
 //GET users 
-router.route('/')
-  .get(verify.user, userCtrl.listAll);
+router.route(`/`)
+  .get(userCtrl.listAll);
 
 
 //Add user 
-router.route('/register')
+router.route(`/register`)
   .post(userCtrl.register);
 
 
 //Login 
-router.route('/login')
+router.route(`/login`)
   .post(userCtrl.login);
 
 
 //Logout 
-router.route('/logout')
+router.route(`/logout`)
   .get(userCtrl.logout);
 
 
 //Verify me 
 
-router.route('/me')
+router.route(`/me`)
   .get(verify.nocache, verify.user, verify.unseal, userCtrl.verifyUser);
 
 module.exports = router;

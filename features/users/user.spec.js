@@ -1,5 +1,5 @@
 require('module-alias/register');
-const config = require('./config.js');
+const config = require('../../spec/config');
 const frisby = require('frisby');
 const Joi = frisby.Joi;
 const servermessage = require('@common/messages');
