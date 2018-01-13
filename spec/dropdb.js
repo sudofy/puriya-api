@@ -1,5 +1,6 @@
-let mongoose = require(`mongoose`);
-const config = require(`../config`);
+require('module-alias/register');
+let mongoose = require('mongoose');
+const config = require('@config');
 describe(`drop db`, function () {
   it(`should drop database`, function (done) {
     mongoose.connect(config.mongoUrl, function () {

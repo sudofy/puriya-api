@@ -1,10 +1,10 @@
-let express = require(`express`);
+let express = require('express');
 
 let router = express.Router();
 
-let verify = require(`@common/verify`);
+let verify = require('@common/verify');
 
-let userCtrl = require(`./user.ctrl.js`);
+let userCtrl = require('./user.ctrl.js');
 
 //GET users 
 router.route(`/`)

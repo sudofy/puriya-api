@@ -1,7 +1,6 @@
-let winston = require(`winston`);
-require(`winston-papertrail`).Papertrail;
-//let log = require(`./puriya`);
-let log = require(`tracer`).console({ format: `{{message}}  - {{file}}:{{line}}` }).log;
+let winston = require('winston');
+require('winston-papertrail').Papertrail;
+let log = require('tracer').console({ format: '{{message}}  - {{file}}:{{line}}' }).log;
 let host = `logs6.papertrailapp.com`;
 let port = 29324;
 

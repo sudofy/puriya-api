@@ -20,7 +20,10 @@
     ],
     "quotes": [
       "error",
-      "backtick"
+      "single",
+      {
+        "allowTemplateLiterals": true
+      }
     ],
     "semi": [
       "error",
