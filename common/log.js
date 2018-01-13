@@ -1,4 +1,3 @@
-/*global  args:true*/
 let winston = require(`winston`);
 require(`winston-papertrail`).Papertrail;
 //let log = require(`./puriya`);
@@ -31,7 +30,7 @@ function productionLogs() {
   } catch (err) {
     //donothing
   }
-  nodeLogger.info(...args, fileName);
+  nodeLogger.info(...arguments, fileName);
 }
 
 

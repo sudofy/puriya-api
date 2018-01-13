@@ -28,6 +28,7 @@
     "jade": "~1.11.0",
     "jasmine": "^2.8.0",
     "jsonwebtoken": "^8.1.0",
+    "lodash": "^4.17.4",
     "module-alias": "^2.0.1",
     "mongoose": "^4.4.7",
     "morgan": "~1.9.0",

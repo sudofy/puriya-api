@@ -2,7 +2,8 @@
   "env": {
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jasmine": true
   },
   "extends": "eslint:recommended",
   "rules": {
@@ -108,7 +109,6 @@
     ],
     "no-useless-rename": "error",
     "no-var": "error",
-    "prefer-rest-params": "error",
     "prefer-spread": "error",
     "prefer-template": "error",
     "template-curly-spacing": [
