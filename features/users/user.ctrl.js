@@ -38,40 +38,40 @@ exports.register = function (req, res, next) {
   User.register(new User({
     username: req.body.username
   }),
-    req.body.password,
-    function (err, user) {
+  req.body.password,
+  function (err, user) {
+    if (err) {
+      return next({
+        message: serverMessages.server.DB_ERROR,
+        data: err
+      });
+    }
+    if (req.body.firstname) {
+      user.firstname = req.body.firstname;
+    }
+    
+    if (req.body.lastname) {
+      user.lastname = req.body.lastname;
+    }
+    if(req.body.admin){
+      user.admin=req.body.admin;
+    }
+    user.save(function (err) {
       if (err) {
         return next({
           message: serverMessages.server.DB_ERROR,
           data: err
         });
       }
-      if (req.body.firstname) {
-        user.firstname = req.body.firstname;
-      }
-
-      if (req.body.lastname) {
-        user.lastname = req.body.lastname;
-      }
-      if (req.body.admin) {
-        user.admin = req.body.admin;
-      }
-      user.save(function (err) {
-        if (err) {
-          return next({
-            message: serverMessages.server.DB_ERROR,
-            data: err
-          });
-        }
-        passport.authenticate(`local`)(req, res, function () {
-          return res.json({
-            message: serverMessages.user.SUCCESS_REGISTER,
-            success: true,
-            data: null
-          });
+      passport.authenticate(`local`)(req, res, function () {
+        return res.json({
+          message: serverMessages.user.SUCCESS_REGISTER,
+          success: true,
+          data: null
         });
       });
     });
+  });
 };
 
 exports.login = function (req, res, next) {
@@ -127,8 +127,8 @@ exports.login = function (req, res, next) {
           });
 
         }).catch((err) => {
-          log(err);
-        });
+        log(err);
+      });
 
     });
   })(req, res, next);
