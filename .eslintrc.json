@@ -102,7 +102,7 @@
     ],
     "arrow-parens": [
       "error",
-      "always"
+      "as-needed"
     ],
     "no-confusing-arrow": [
       "error",

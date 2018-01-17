@@ -31,7 +31,6 @@ exports.register = function (req, res, next) {
   if (!req.body.username || !req.body.password) {
     return next({
       message: serverMessages.server.MISSING_FORM_DATA_ERROR,
-      success: true,
       data: null
     });
   }
