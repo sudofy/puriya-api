@@ -76,7 +76,6 @@
         "allowCall": true
       }
     ],
-    "no-sync": "error",
     "array-bracket-newline": [
       "error",
       {
