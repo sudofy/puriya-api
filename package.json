@@ -9,7 +9,8 @@
     "cleardb": "node_modules/.bin/jasmine spec/dropdb.js",
     "pretest": "npm run cleardb",
     "posttest": "npm run cleardb",
-    "lint": "node_modules/.bin/eslint -c ./.eslintrc.json --ext .js **/*.js"
+    "lint": "node_modules/.bin/eslint -c ./.eslintrc.json --ext .js **/*.js",
+    "validate": "npm ls"
   },
   "_moduleAliases": {
     "@common": "./common/",
@@ -48,6 +49,7 @@
     "lint"
   ],
   "devDependencies": {
-    "eslint": "^4.15.0"
+    "eslint": "^4.15.0",
+    "pre-commit": "^1.2.2"
   }
 }

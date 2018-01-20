@@ -1,32 +1,32 @@
-let express = require('express');
+const express = require('express');
 
-let router = express.Router();
+const router = express.Router();
 
-let verify = require('@common/verify');
+const verify = require('@common/verify');
 
-let userCtrl = require('./user.ctrl.js');
+const userCtrl = require('./user.ctrl.js');
 
-//GET users 
+// GET users
 router.route(`/`)
   .get(userCtrl.listAll);
 
 
-//Add user 
+// Add user
 router.route(`/register`)
   .post(userCtrl.register);
 
 
-//Login 
+// Login
 router.route(`/login`)
   .post(userCtrl.login);
 
 
-//Logout 
+// Logout
 router.route(`/logout`)
   .get(userCtrl.logout);
 
 
-//Verify me 
+// Verify me
 
 router.route(`/me`)
   .get(verify.nocache, verify.user, verify.unseal, userCtrl.verifyUser);

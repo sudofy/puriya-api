@@ -1,20 +1,11 @@
-let express = require('express');
+const express = require('express');
 // default user route Import
-let user = require('../features/users/user.route');
-
-
-
-
+const user = require('../features/users/user.route');
 
 module.exports = function (app) {
 
-  let router = express.Router();
-
-
-
-
-
-  //default user route
+  const router = express.Router();
+  // default user route
   router.use(`/user`, user);
 
   app.use(`/api`, router);

@@ -4,18 +4,18 @@
  * Module dependencies.
  */
 require('module-alias/register');
-let app = require('../main');
-let debug = require('debug')('api:server');
-let http = require('http');
-let log = require('@common/log');
-let art = require('ascii-art');
-let serverMessages = require('@common/messages');
-let serverCodes = require('@common/codes');
+const app = require('../main');
+const debug = require('debug')('api:server');
+const http = require('http');
+const log = require('@common/log');
+const art = require('ascii-art');
+const serverMessages = require('@common/messages');
+const serverCodes = require('@common/codes');
 /**
  * Get port from environment and store in Express.
  */
 function normalizePort(val) {
-  let portnum = parseInt(val, 10);
+  const portnum = parseInt(val, 10);
 
   if (isNaN(portnum)) {
     // named pipe
@@ -29,14 +29,14 @@ function normalizePort(val) {
 
   return false;
 }
-let port = normalizePort(process.env.PORT || `3000`);
+const port = normalizePort(process.env.PORT || `3000`);
 app.set(`port`, port);
 
 /**
  * Create HTTP server.
  */
 
-let server = http.createServer(app);
+const server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
@@ -49,8 +49,8 @@ let server = http.createServer(app);
  */
 
 function onListening() {
-  let addr = server.address();
-  let bind = typeof addr === `string`
+  const addr = server.address();
+  const bind = typeof addr === `string`
     ? `pipe ${addr}`
     : `port ${addr.port}`;
   debug(`Listening on  ${bind}`);
@@ -71,7 +71,7 @@ function onError(error) {
     throw error;
   }
 
-  let bind = typeof port === `string`
+  const bind = typeof port === `string`
     ? `Pipe ${port}`
     : `Port ${port}`;
   // handle specific listen errors with friendly messages
@@ -92,7 +92,7 @@ server.listen(port);
 server.on(`error`, onError);
 server.on(`listening`, onListening);
 
-//Requiring routes
+// Requiring routes
 require('../routes/router')(app);
 /**
  * Normalize a port into a number, string, or false.
@@ -111,7 +111,7 @@ app.use(function (req, res, next) {
 // development error handler
 // will print stacktrace
 if (app.get(`env`) === `development`) {
-  app.use(function (err, req, res,next) {// eslint-disable-line no-unused-vars
+  app.use(function (err, req, res, next) {// eslint-disable-line no-unused-vars
     log(`##API--ERR`);
     log(err);
     res.status(err.status || serverCodes.SERVER_ERROR);
@@ -125,7 +125,7 @@ if (app.get(`env`) === `development`) {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function (err, req, res,next) { // eslint-disable-line no-unused-vars
+app.use(function (err, req, res, next) { // eslint-disable-line no-unused-vars
   log(`##API--ERR`);
   log(err);
   res.status(err.status || serverCodes.SERVER_ERROR);

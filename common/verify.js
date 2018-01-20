@@ -1,7 +1,7 @@
 
-let jwt = require('jsonwebtoken');
-let Iron = require('iron');
-let config = require('@config');
+const jwt = require('jsonwebtoken');
+const Iron = require('iron');
+const config = require('@config');
 
 exports.getToken = function (user, expiresIn) {
   return jwt.sign(user, config.secretKey, {
@@ -11,7 +11,7 @@ exports.getToken = function (user, expiresIn) {
 
 exports.user = function (req, res, next) {
   // check header or url parameters or post parameters for token
-  let token = req.body.token || req.query.token || req.headers[`x-access-token`];
+  const token = req.body.token || req.query.token || req.headers[`x-access-token`];
 
   // decode token
   if (token) {
@@ -30,7 +30,7 @@ exports.user = function (req, res, next) {
   } else {
     // if there is no token
     // return an error
-    let err = new Error(`No token provided!`);
+    const err = new Error(`No token provided!`);
     err.status = 403;
     return next(err);
   }
@@ -60,7 +60,7 @@ exports.nocache = function nocache(req, res, next) {
 
 exports.admin = function (req, res, next) {
   // check header or url parameters or post parameters for token
-  let token = req.body.token || req.query.token || req.headers[`x-access-token`];
+  const token = req.body.token || req.query.token || req.headers[`x-access-token`];
 
   // decode token
   if (token) {
@@ -87,7 +87,7 @@ exports.admin = function (req, res, next) {
   } else {
     // if there is no token
     // return an error
-    let err = new Error(`No token provided!`);
+    const err = new Error(`No token provided!`);
     err.status = 403;
     return next(err);
   }

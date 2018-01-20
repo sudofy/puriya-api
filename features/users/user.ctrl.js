@@ -1,10 +1,10 @@
 
-let User = require('./user.model.js');
-let passport = require('passport');
-let log = require('@common/log');
-let auth = require('@common/auth');
-let serverCodes = require('@common/codes');
-let serverMessages = require('@common/messages');
+const User = require('./user.model.js');
+const passport = require('passport');
+const log = require('@common/log');
+const auth = require('@common/auth');
+const serverCodes = require('@common/codes');
+const serverMessages = require('@common/messages');
 exports.listAll = function (req, res, next) {
   User.find({}, function (err, users) {
     if (err) {
@@ -35,11 +35,7 @@ exports.register = function (req, res, next) {
     });
   }
 
-  User.register(new User({
-    username: req.body.username
-  }),
-  req.body.password,
-  function (err, user) {
+  User.register(new User({ username: req.body.username }), req.body.password, function (err, user) {
     if (err) {
       return next({
         message: serverMessages.server.DB_ERROR,
@@ -49,12 +45,12 @@ exports.register = function (req, res, next) {
     if (req.body.firstname) {
       user.firstname = req.body.firstname;
     }
-    
+
     if (req.body.lastname) {
       user.lastname = req.body.lastname;
     }
-    if(req.body.admin){
-      user.admin=req.body.admin;
+    if (req.body.admin) {
+      user.admin = req.body.admin;
     }
     user.save(function (err) {
       if (err) {
@@ -126,7 +122,7 @@ exports.login = function (req, res, next) {
             data: err
           });
 
-        }).catch((err) => {
+        }).catch(err => {
         log(err);
       });
 

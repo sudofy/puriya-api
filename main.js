@@ -1,14 +1,14 @@
-let express = require('express');
-let path = require('path');
-let logger = require('morgan');
-let cookieParser = require('cookie-parser');
-let bodyParser = require('body-parser');
-let database = require('@common/database');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const database = require('@common/database');
 
-let passport = require('passport');
-let cors = require('cors');
+const passport = require('passport');
+const cors = require('cors');
 
-let app = express();
+const app = express();
 database.connect();
 // view engine setup
 app.set(`views`, path.join(__dirname, `views`));
@@ -17,7 +17,7 @@ app.set(`view engine`, `jade`);
 
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, `public`, `favicon.ico`)));
+// app.use(favicon(path.join(__dirname, `public`, `favicon.ico`)));
 app.use(cors());
 app.use(logger(`dev`));
 app.use(bodyParser.json());
@@ -26,7 +26,7 @@ app.use(cookieParser());
 
 app.use(express.static(path.join(__dirname, `public`)));
 
-//Setup Passport.js for token based user auth
+// Setup Passport.js for token based user auth
 require('@common/auth');
 app.use(passport.initialize());
 

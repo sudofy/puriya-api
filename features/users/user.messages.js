@@ -6,7 +6,7 @@ module.exports = {
   SUCCESS_REGISTER: `User registered Successfully`,
   SUCCESS_VERIFY: `User Verification Successful`,
   SUCCESS_FOUND: `Users Found Successfully`,
-  //ERROR
+  // ERROR
   ERROR_LOGIN: `Something went wrong while login.`,
   ERROR_CAN_NOT_LOGIN: `Could not log in user`,
   ERROR_FINDING_USER: `Something went wrong while finding user`,
