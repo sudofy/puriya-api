@@ -1,35 +1,99 @@
-const express = require('express');
+require('module-alias/register');
+const config = require('../../spec/config');
+const frisby = require('frisby');
+const Joi = frisby.Joi;
 
-const router = express.Router();
+describe(`User register :`, () => {
+  it(`should save information of user`, () => {
 
-const verify = require('@common/verify');
+    frisby
+      .post(`${config.domain}/user/register`, {
 
-const userCtrl = require('./user.ctrl.js');
+        username: `dany600`,
+        password: `12345`,
+        firstname: `faizan`,
+        lastname: `saeed`,
+      })
+      .expect(`status`, 200)
+      .expect(`json`, `errors.0`, {
+        message: `User registered Successfully`
+      })
+      .done();
 
-// GET users
-router.route(`/`)
-  .get(userCtrl.listAll);
+  });
 
+});
+describe(`User Login :`, () => {
+  it(`it should login the user`, () => {
+    frisby
+      .post(`${config.domain}/user/login`, {
+        username: `dany600`,
+        password: `12345`,
+      })
+      .expect(`status`, 200)
+      .expect(`json`, `errors.0`, {
 
-// Add user
-router.route(`/register`)
-  .post(userCtrl.register);
+        message: `Login successful!`,
+        success: true,
+        data: {
+          token: Joi.string(),
+          user: {
+            firstname: `,
+            lastname: `,
+            __v: 0,
+            username: `dany600`,
+            _id: Joi.string()
+          }
+        }
+      })
 
+      .done();
 
-// Login
-router.route(`/login`)
-  .post(userCtrl.login);
+  });
 
+  it(`it should  fail to login the user with username missing`, () => {
+    frisby
+      .post(`${config.domain}/user/login`, {
+        password: `12345`
+      })
+      .expect(`status`, 401)
+      .done();
 
-// Logout
-router.route(`/logout`)
-  .get(userCtrl.logout);
+  });
 
+  it(`it should  fail to login the user with password missing`, () => {
+    frisby
+      .post(`${config.domain}/user/login`, {
+        username: `dany600`
+      })
+      .expect(`status`, 401)
+      .done();
 
-// Verify me
+  });
+});
+describe(`User Logout :`, () => {
+  it(`it should logout the user`, () => {
+    frisby
+      .get(`${config.domain}/user/logout`, {
 
-router.route(`/me`)
-  .get(verify.nocache, verify.user, verify.unseal, userCtrl.verifyUser);
+      })
+      .expect(`status`, 200)
+      .done();
 
-module.exports = router;
+  });
+});
+describe(`Get all users :`, () => {
+  it(`it should fail to get all users`, () => {
+    frisby
+      .get(`${config.domain}/user/`, {
 
+      })
+      .expect(`status`, 403)
+      .expect(`json`, `errors.0`, {
+        message: `No token provided!`,
+        success: false
+      })
+      .done();
+
+  });
+});

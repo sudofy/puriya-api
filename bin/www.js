@@ -42,8 +42,6 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-
-
 /**
  * Event listener for HTTP server "listening" event.
  */
@@ -139,7 +137,3 @@ app.use(function (err, req, res, next) { // eslint-disable-line no-unused-vars
 // process.on(`uncaughtException`, function (err) {
 //   log(`Caught exception: ` + err);
 // });
-
-
-
-

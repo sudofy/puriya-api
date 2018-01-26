@@ -10,21 +10,17 @@ const userCtrl = require('./user.ctrl.js');
 router.route(`/`)
   .get(userCtrl.listAll);
 
-
 // Add user
 router.route(`/register`)
   .post(userCtrl.register);
-
 
 // Login
 router.route(`/login`)
   .post(userCtrl.login);
 
-
 // Logout
 router.route(`/logout`)
   .get(userCtrl.logout);
-
 
 // Verify me
 

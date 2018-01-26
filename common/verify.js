@@ -1,4 +1,3 @@
-
 const jwt = require('jsonwebtoken');
 const Iron = require('iron');
 const config = require('@config');
@@ -91,6 +90,5 @@ exports.admin = function (req, res, next) {
     err.status = 403;
     return next(err);
   }
-
 
 };

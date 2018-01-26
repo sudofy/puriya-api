@@ -14,11 +14,9 @@ const nodeWinstonPapertrail = new winston.transports.Papertrail({
   }
 });
 
-
 const nodeLogger = new winston.Logger({
   transports: [nodeWinstonPapertrail]
 });
-
 
 function productionLogs() {
   let fileParts;
@@ -31,7 +29,6 @@ function productionLogs() {
   }
   nodeLogger.info(...arguments, fileName);
 }
-
 
 // PRODUNCTION LOGS
 if (process.env.ENVIRONMENT === `aws`) {

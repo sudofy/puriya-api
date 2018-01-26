@@ -10,16 +10,16 @@ const Q = require('q');
 // Setup Local Login Strategy
 passport.use(new LocalStrategy(User.authenticate()));
 
-
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 exports.getLoginData = function (user, expiry) {
-  const userData = user._doc;
-  delete userData.hash;
-  delete userData.salt;
-  delete userData.resetToken;
-  delete userData.admin;
+  const userData = {
+    firstname: user._doc.firstname,
+    lastname: user._doc.lastname,
+    username: user._doc.username,
+    _id: user._doc._id
+  };
 
   const deferred = Q.defer();
   Iron.seal(userData, config.sealPass, Iron.defaults, function (err, sealed) {
@@ -35,7 +35,6 @@ exports.getLoginData = function (user, expiry) {
     };
     deferred.resolve(data);
   });
-
 
   return deferred.promise;
 };

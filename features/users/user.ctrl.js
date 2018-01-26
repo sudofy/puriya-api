@@ -1,4 +1,3 @@
-
 const User = require('./user.model.js');
 const passport = require('passport');
 const log = require('@common/log');
@@ -108,7 +107,6 @@ exports.login = function (req, res, next) {
       auth.getLoginData(user).then(
 
         function (data) {
-
 
           return res.json({
             message: serverMessages.user.SUCCESS_LOGIN,
