@@ -4,7 +4,7 @@ const frisby = require('frisby');
 const Joi = frisby.Joi;
 
 describe(`User register :`, () => {
-  it(`should save information of user`, () => {
+  it(`should save information of user`, done => {
 
     frisby
       .post(`${config.domain}/user/register`, {
@@ -15,16 +15,16 @@ describe(`User register :`, () => {
         lastname: `saeed`,
       })
       .expect(`status`, 200)
-      .expect(`json`, `errors.0`, {
+      .expect(`json`, `errors`, {
         message: `User registered Successfully`
       })
-      .done();
+      .done(done);
 
   });
 
 });
 describe(`User Login :`, () => {
-  it(`it should login the user`, () => {
+  it(`it should login the user`, done => {
     frisby
       .post(`${config.domain}/user/login`, {
         username: `dany600`,
@@ -47,43 +47,43 @@ describe(`User Login :`, () => {
         }
       })
 
-      .done();
+      .done(done);
 
   });
 
-  it(`it should  fail to login the user with username missing`, () => {
+  it(`it should  fail to login the user with username missing`, done => {
     frisby
       .post(`${config.domain}/user/login`, {
         password: `12345`
       })
       .expect(`status`, 401)
-      .done();
+      .done(done);
 
   });
 
-  it(`it should  fail to login the user with password missing`, () => {
+  it(`it should  fail to login the user with password missing`, done => {
     frisby
       .post(`${config.domain}/user/login`, {
         username: `dany600`
       })
       .expect(`status`, 401)
-      .done();
+      .done(done);
 
   });
 });
 describe(`User Logout :`, () => {
-  it(`it should logout the user`, () => {
+  it(`it should logout the user`, done => {
     frisby
       .get(`${config.domain}/user/logout`, {
 
       })
       .expect(`status`, 200)
-      .done();
+      .done(done);
 
   });
 });
 describe(`Get all users :`, () => {
-  it(`it should fail to get all users`, () => {
+  it(`it should fail to get all users`, done => {
     frisby
       .get(`${config.domain}/user/`, {
 
@@ -93,7 +93,7 @@ describe(`Get all users :`, () => {
         message: `No token provided!`,
         success: false
       })
-      .done();
+      .done(done);
 
   });
 });
