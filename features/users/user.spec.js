@@ -31,7 +31,7 @@ describe(`User Login :`, () => {
         password: `12345`,
       })
       .expect(`status`, 200)
-      .expect(`json`, `errors.0`, {
+      .expect(`json`, {
 
         message: `Login successful!`,
         success: true,
@@ -89,7 +89,7 @@ describe(`Get all users :`, () => {
 
       })
       .expect(`status`, 403)
-      .expect(`json`, `errors.0`, {
+      .expect(`json`, {
         message: `No token provided!`,
         success: false
       })
