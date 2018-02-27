@@ -38,7 +38,7 @@ exports.register = async function (req, res) {
     });
   }).catch(err => {
     if (err) {
-      throw Boom.badRequest('Missing user data');
+      throw Boom.badRequest(`DB error`);
     }
   });
 };
@@ -99,32 +99,23 @@ exports.login = function (req, res, next) {
   })(req, res, next);
 };
 
-exports.verifyUser = async function (req, res, next) {
+exports.verifyUser = async function (req, res) {
   const param = { ...req };
   await userData.verifyUser(param).then(user => {
     if (!user) {
-      return next({
-        message: serverMessages.user.ERROR_NO_USER,
-        data: {}
-      });
+      Boom.badImplementation('No user');
     }
-    auth.getLoginData(user).then(
-      function (data) {
-
-        return res.json({
-          message: serverMessages.user.SUCCESS_VERIFY,
-          success: true,
-          data: data
-        });
-      },
-      function (err) {
-
-        return next({
-          message: serverMessages.user.ERROR_GET_USERDATA,
-          data: err
-        });
+    auth.getLoginData(user).then(function (data) {
+      return res.json({
+        message: serverMessages.user.SUCCESS_VERIFY,
+        success: true,
+        data: data
+      });
+    }).catch(err => {
+      if (err) {
+        Boom.badImplementation('Error get user data');
       }
-    );
+    });
   });
 };
 
