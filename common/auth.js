@@ -18,6 +18,7 @@ exports.getLoginData = function (user, expiry) {
     firstname: user._doc.firstname,
     lastname: user._doc.lastname,
     username: user._doc.username,
+    admin: user._doc.admin,
     _id: user._doc._id
   };
 
