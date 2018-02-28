@@ -45,7 +45,6 @@ exports.unseal = function (req, res, next) {
       });
     } else {
       req._user = unsealed;
-      console.log(req._user.admin)
       next();
     }
   });

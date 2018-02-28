@@ -5,7 +5,7 @@ const serverMessages = require('@common/messages');
 const userData = require('./user.db');
 const Boom = require('Boom');
 
-exports.listAll = async function (req, res, next) {
+exports.listAll = async function (req, res) {
   const params = { ...req };
   let users = null;
   users = await userData.findAllUser(params);
