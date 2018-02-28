@@ -30,7 +30,7 @@ const userValidator = require('./user.validator');
      *
      */
 router.route(`/`)
-  .get(userCtrl.listAll);
+  .get(verify.nocache, verify.user, verify.unseal, verify.admin, userCtrl.listAll);
 
 /**
      *

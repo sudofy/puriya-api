@@ -1,7 +1,6 @@
 const passport = require('passport');
 const log = require('@common/log');
 const auth = require('@common/auth');
-const serverCodes = require('@common/codes');
 const serverMessages = require('@common/messages');
 const userData = require('./user.db');
 const Boom = require('Boom');
@@ -28,19 +27,21 @@ exports.listAll = async function (req, res, next) {
 
 exports.register = async function (req, res) {
   const params = { ...req };
-  await userData.registerUser(params).then(() => {
+  await userData.registerUser(params);
+  try {
     passport.authenticate(`local`)(req, res, function () {
+      console.log('wdwdw')
       return res.json({
         message: serverMessages.user.SUCCESS_REGISTER,
         success: true,
         data: null
       });
     });
-  }).catch(err => {
+  } catch (err) {
     if (err) {
-      throw Boom.badRequest(`DB error`);
+      throw Boom.badImplementation(`DB error`);
     }
-  });
+  }
 };
 
 exports.login = function (req, res, next) {
@@ -48,17 +49,10 @@ exports.login = function (req, res, next) {
   passport.authenticate(`local`, function (err, user, info) {
     log(err, user, info);
     if (err) {
-      return next({
-        message: serverMessages.generic.DB_ERROR,
-        data: err
-      });
+      return Boom.badImplementation('DB ERROR');
     }
     if (info) {
-      return next({
-        status: serverCodes.AUTH_ERROR,
-        message: info.message,
-        data: err
-      });
+      return Boom.unauthorized('Auth error');
     }
     if (!user) {
       return next({
@@ -71,11 +65,7 @@ exports.login = function (req, res, next) {
       log(err);
 
       if (err) {
-
-        return next({
-          message: serverMessages.user.ERROR_CAN_NOT_LOGIN,
-          data: err
-        });
+        return Boom.forbidden('Login error');
       }
 
       auth.getLoginData(user).then(function (data) {
@@ -86,10 +76,9 @@ exports.login = function (req, res, next) {
           data: data
         });
       }, function (err) {
-        return next({
-          message: serverMessages.user.ERROR_LOGIN,
-          data: err
-        });
+        if (err) {
+          return Boom.forbidden('Login error');
+        }
 
       }).catch(err => {
         log(err);
@@ -99,11 +88,14 @@ exports.login = function (req, res, next) {
   })(req, res, next);
 };
 
-exports.verifyUser = async function (req, res) {
+exports.verifyUser = async function (req, res, next) {
   const param = { ...req };
   await userData.verifyUser(param).then(user => {
-    if (!user) {
-      Boom.badImplementation('No user');
+    if (user.length === 0) {
+      return next({
+        message: serverMessages.user.ERROR_NO_USER,
+        data: {}
+      });
     }
     auth.getLoginData(user).then(function (data) {
       return res.json({
@@ -120,7 +112,7 @@ exports.verifyUser = async function (req, res) {
 };
 
 exports.logout = function (req, res) {
-  userData.logoutUser();
+  req.logout();
   res.json({
     message: serverMessages.user.SUCCESS_LOGOUT,
     success: true,

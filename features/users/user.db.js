@@ -39,9 +39,6 @@ exports.registerUser = function (req) {
     });
   });
 };
-exports.logoutUser = function (req) {
-  req.logout;
-};
 exports.verifyUser = function (req) {
   return new Promise(function (resolve, reject) {
     User.findById(req._user._id, function (err, user) {
