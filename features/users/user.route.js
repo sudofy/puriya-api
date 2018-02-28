@@ -1,32 +1,145 @@
-let express = require('express');
+const express = require('express');
+const router = express.Router();
+const verify = require('@common/verify');
+const userCtrl = require('./user.ctrl.js');
+const userValidator = require('./user.validator');
 
-let router = express.Router();
-
-let verify = require('@common/verify');
-
-let userCtrl = require('./user.ctrl.js');
-
-//GET users 
+/**
+     *
+     * @api {get} /
+     * @apiName listAll
+     * @apiGroup User
+     * @apiVersion  major.minor.patch
+     *
+     *
+     * @apiParam  {String} paramName description
+     *
+     * @apiSuccess (200) {type} name description
+     *
+     * @apiParamExample  {type} Request-Example:
+       {
+           property : value
+       }
+     *
+     *
+     * @apiSuccessExample {type} Success-Response:
+       {
+           property : value
+       }
+     *
+     *
+     */
 router.route(`/`)
-  .get(userCtrl.listAll);
+  .get(verify.nocache, verify.user, verify.unseal, verify.admin, userCtrl.listAll);
 
-
-//Add user 
+/**
+     *
+     * @api {post} /register
+     * @apiName register
+     * @apiGroup User
+     * @apiVersion  major.minor.patch
+     *
+     *
+     * @apiParam  {String} paramName description
+     *
+     * @apiSuccess (200) {type} name description
+     *
+     * @apiParamExample  {type} Request-Example:
+       {
+           property : value
+       }
+     *
+     *
+     * @apiSuccessExample {type} Success-Response:
+       {
+           property : value
+       }
+     *
+     *
+     */
 router.route(`/register`)
-  .post(userCtrl.register);
+  .post(userValidator.register, userCtrl.register);
 
-
-//Login 
+/**
+      *
+      * @api {post} /login
+      * @apiName login
+      * @apiGroup User
+      * @apiVersion  major.minor.patch
+      *
+      *
+      * @apiParam  {String} paramName description
+      *
+      * @apiSuccess (200) {type} name description
+      *
+      * @apiParamExample  {type} Request-Example:
+        {
+            property : value
+        }
+      *
+      *
+      * @apiSuccessExample {type} Success-Response:
+        {
+            property : value
+        }
+      *
+      *
+      */
 router.route(`/login`)
-  .post(userCtrl.login);
-
-
-//Logout 
+  .post(userValidator.login, userCtrl.login);
+/**
+       *
+       * @api {get} /logout
+       * @apiName logout
+       * @apiGroup User
+       * @apiVersion  major.minor.patch
+       *
+       *
+       * @apiParam  {String} paramName description
+       *
+       * @apiSuccess (200) {type} name description
+       *
+       * @apiParamExample  {type} Request-Example:
+         {
+             property : value
+         }
+       *
+       *
+       * @apiSuccessExample {type} Success-Response:
+         {
+             property : value
+         }
+       *
+       *
+       */
 router.route(`/logout`)
   .get(userCtrl.logout);
 
-
-//Verify me 
+/**
+ *
+ * @api {get} /me
+ * @apiName verifyUser
+ * @apiGroup User
+ * @apiVersion  major.minor.patch
+ *
+ *
+ * @apiParam  {String} paramName description
+ *
+ * @apiSuccess (200) {type} name description
+ *
+ * @apiParamExample  {type} Request-Example:
+   {
+       property : value
+   }
+ *
+ *
+ * @apiSuccessExample {type} Success-Response:
+   {
+       property : value
+   }
+ *
+ *
+ */
 
 router.route(`/me`)
   .get(verify.nocache, verify.user, verify.unseal, userCtrl.verifyUser);

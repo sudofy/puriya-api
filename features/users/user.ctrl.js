@@ -1,22 +1,16 @@
-
-let User = require('./user.model.js');
-let passport = require('passport');
-let log = require('@common/log');
-let auth = require('@common/auth');
-let serverCodes = require('@common/codes');
-let serverMessages = require('@common/messages');
-exports.listAll = function (req, res, next) {
-  User.find({}, function (err, users) {
-    if (err) {
-      return next({
-        message: serverMessages.server.DB_ERROR,
-        data: err
-      });
-    }
+const passport = require('passport');
+const log = require('@common/log');
+const auth = require('@common/auth');
+const serverMessages = require('@common/messages');
+const userData = require('./user.db');
+const Boom = require('Boom');
+exports.listAll = async function (req, res, next) {
+  const params = { ...req };
+  await userData.findAllUser(params).then(users => {
     if (users.length === 0) {
       return next({
         message: serverMessages.user.ERROR_NO_USER,
-        data: err
+        data: {}
       });
     }
     return res.json({
@@ -24,54 +18,30 @@ exports.listAll = function (req, res, next) {
       success: true,
       data: users
     });
+  }).catch(err => {
+    if (err) {
+      throw Boom.badImplementation(`DB error`);
+    }
   });
 };
 
-exports.register = function (req, res, next) {
-  if (!req.body.username || !req.body.password) {
-    return next({
-      message: serverMessages.server.MISSING_FORM_DATA_ERROR,
-      data: null
+exports.register = async function (req, res) {
+  const params = { ...req };
+  await userData.registerUser(params);
+  try {
+    passport.authenticate(`local`)(req, res, function () {
+      console.log('wdwdw')
+      return res.json({
+        message: serverMessages.user.SUCCESS_REGISTER,
+        success: true,
+        data: null
+      });
     });
-  }
-
-  User.register(new User({
-    username: req.body.username
-  }),
-  req.body.password,
-  function (err, user) {
+  } catch (err) {
     if (err) {
-      return next({
-        message: serverMessages.server.DB_ERROR,
-        data: err
-      });
+      throw Boom.badImplementation(`DB error`);
     }
-    if (req.body.firstname) {
-      user.firstname = req.body.firstname;
-    }
-    
-    if (req.body.lastname) {
-      user.lastname = req.body.lastname;
-    }
-    if(req.body.admin){
-      user.admin=req.body.admin;
-    }
-    user.save(function (err) {
-      if (err) {
-        return next({
-          message: serverMessages.server.DB_ERROR,
-          data: err
-        });
-      }
-      passport.authenticate(`local`)(req, res, function () {
-        return res.json({
-          message: serverMessages.user.SUCCESS_REGISTER,
-          success: true,
-          data: null
-        });
-      });
-    });
-  });
+  }
 };
 
 exports.login = function (req, res, next) {
@@ -79,17 +49,10 @@ exports.login = function (req, res, next) {
   passport.authenticate(`local`, function (err, user, info) {
     log(err, user, info);
     if (err) {
-      return next({
-        message: serverMessages.generic.DB_ERROR,
-        data: err
-      });
+      return Boom.badImplementation('DB ERROR');
     }
     if (info) {
-      return next({
-        status: serverCodes.AUTH_ERROR,
-        message: info.message,
-        data: err
-      });
+      return Boom.unauthorized('Auth error');
     }
     if (!user) {
       return next({
@@ -102,31 +65,22 @@ exports.login = function (req, res, next) {
       log(err);
 
       if (err) {
-
-        return next({
-          message: serverMessages.user.ERROR_CAN_NOT_LOGIN,
-          data: err
-        });
+        return Boom.forbidden('Login error');
       }
 
-      auth.getLoginData(user).then(
+      auth.getLoginData(user).then(function (data) {
 
-        function (data) {
+        return res.json({
+          message: serverMessages.user.SUCCESS_LOGIN,
+          success: true,
+          data: data
+        });
+      }, function (err) {
+        if (err) {
+          return Boom.forbidden('Login error');
+        }
 
-
-          return res.json({
-            message: serverMessages.user.SUCCESS_LOGIN,
-            success: true,
-            data: data
-          });
-        },
-        function (err) {
-          return next({
-            message: serverMessages.user.ERROR_LOGIN,
-            data: err
-          });
-
-        }).catch((err) => {
+      }).catch(err => {
         log(err);
       });
 
@@ -134,38 +88,26 @@ exports.login = function (req, res, next) {
   })(req, res, next);
 };
 
-exports.verifyUser = function (req, res, next) {
-
-  User.findById(req._user._id, function (err, user) {
-    if (err) {
-      return next({
-        message: serverMessages.user.ERROR_FINDING_USER,
-        data: err
-      });
-    }
-    if (!user) {
+exports.verifyUser = async function (req, res, next) {
+  const param = { ...req };
+  await userData.verifyUser(param).then(user => {
+    if (user.length === 0) {
       return next({
         message: serverMessages.user.ERROR_NO_USER,
-        data: err
+        data: {}
       });
     }
-    auth.getLoginData(user).then(
-      function (data) {
-
-        return res.json({
-          message: serverMessages.user.SUCCESS_VERIFY,
-          success: true,
-          data: data
-        });
-      },
-      function (err) {
-
-        return next({
-          message: serverMessages.user.ERROR_GET_USERDATA,
-          data: err
-        });
+    auth.getLoginData(user).then(function (data) {
+      return res.json({
+        message: serverMessages.user.SUCCESS_VERIFY,
+        success: true,
+        data: data
+      });
+    }).catch(err => {
+      if (err) {
+        Boom.badImplementation('Error get user data');
       }
-    );
+    });
   });
 };
 

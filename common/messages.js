@@ -19,6 +19,7 @@ module.exports = {
     ROUTE_NOT_FOUND: `Requested route is not found`,
     MISSING_KEY: `Missing Service Key in Headers`,
     INVALID_KEY: `Service Key is not valid`,
-    KEY_JWT_ERR: `Can not use SERVICE KEY and USER TOKEN at the same time`
+    KEY_JWT_ERR: `Can not use SERVICE KEY and USER TOKEN at the same time`,
+    VALIDATION_ERROR: 'Validation error'
   }
 };

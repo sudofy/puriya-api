@@ -5,6 +5,12 @@
     "node": true,
     "jasmine": true
   },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
   "extends": "eslint:recommended",
   "rules": {
     "indent": [
@@ -76,7 +82,6 @@
         "allowCall": true
       }
     ],
-    "no-sync": "error",
     "array-bracket-newline": [
       "error",
       {
@@ -135,6 +140,41 @@
     "eol-last": [
       "error",
       "always"
+    ],
+    "arrow-body-style": [
+      "error",
+      "as-needed"
+    ],
+    "constructor-super": "error",
+    "no-const-assign": "error",
+    "prefer-const": "error",
+    "switch-colon-spacing": "error",
+    "no-whitespace-before-property": "error",
+    "no-inline-comments": "error",
+    "new-parens": "error",
+    "lines-between-class-members": [
+      "error",
+      "always"
+    ],
+    "no-redeclare": "error",
+    "no-new": "error",
+    "no-eq-null": "error",
+    "block-scoped-var": "error",
+    "no-extra-parens": "error",
+    "no-empty": "error",
+    "no-unreachable": "error",
+    "spaced-comment": [
+      "error",
+      "always"
+    ],
+    "no-trailing-spaces": "error",
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1,
+        "maxBOF": 0,
+        "maxEOF": 1
+      }
     ]
   }
 }

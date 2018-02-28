@@ -5,21 +5,18 @@ const Joi = frisby.Joi;
 
 describe(`User register :`, () => {
   it(`should save information of user`, () => {
-
     frisby
       .post(`${config.domain}/user/register`, {
-
         username: `dany600`,
         password: `12345`,
         firstname: `faizan`,
         lastname: `saeed`,
       })
       .expect(`status`, 200)
-      .expect(`json`, `errors.0`, {
-        message: `User registered Successfully`
+      .expect(`json`, `errors`, {
+        message: `User registered Successfully`,
       })
       .done();
-
   });
 
 });
@@ -31,15 +28,15 @@ describe(`User Login :`, () => {
         password: `12345`,
       })
       .expect(`status`, 200)
-      .expect(`json`, `errors.0`, {
+      .expect(`json`, {
 
         message: `Login successful!`,
         success: true,
         data: {
           token: Joi.string(),
           user: {
-            firstname: `,
-            lastname: `,
+            firstname: Joi.string(),
+            lastname: Joi.string(),
             __v: 0,
             username: `dany600`,
             _id: Joi.string()
@@ -56,7 +53,7 @@ describe(`User Login :`, () => {
       .post(`${config.domain}/user/login`, {
         password: `12345`
       })
-      .expect(`status`, 401)
+      .expect(`status`, 500)
       .done();
 
   });
@@ -66,7 +63,7 @@ describe(`User Login :`, () => {
       .post(`${config.domain}/user/login`, {
         username: `dany600`
       })
-      .expect(`status`, 401)
+      .expect(`status`, 500)
       .done();
 
   });
@@ -89,7 +86,7 @@ describe(`Get all users :`, () => {
 
       })
       .expect(`status`, 403)
-      .expect(`json`, `errors.0`, {
+      .expect(`json`, {
         message: `No token provided!`,
         success: false
       })
@@ -97,7 +94,3 @@ describe(`Get all users :`, () => {
 
   });
 });
-
-
-
-
