@@ -30,7 +30,6 @@ exports.register = async function (req, res) {
   await userData.registerUser(params);
   try {
     passport.authenticate(`local`)(req, res, function () {
-      console.log('wdwdw')
       return res.json({
         message: serverMessages.user.SUCCESS_REGISTER,
         success: true,
