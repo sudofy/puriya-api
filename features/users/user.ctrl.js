@@ -4,13 +4,16 @@ const auth = require('@common/auth');
 const serverMessages = require('@common/messages');
 const userData = require('./user.db');
 const Boom = require('Boom');
+
 exports.listAll = async function (req, res, next) {
   const params = { ...req };
-  await userData.findAllUser(params).then(users => {
+  let users = null;
+  users = await userData.findAllUser(params);
+  try {
     if (users.length === 0) {
-      return next({
+      return res.json({
         message: serverMessages.user.ERROR_NO_USER,
-        data: {}
+        data: []
       });
     }
     return res.json({
@@ -18,11 +21,11 @@ exports.listAll = async function (req, res, next) {
       success: true,
       data: users
     });
-  }).catch(err => {
+  } catch (err) {
     if (err) {
       throw Boom.badImplementation(`DB error`);
     }
-  });
+  }
 };
 
 exports.register = async function (req, res) {
@@ -89,7 +92,9 @@ exports.login = function (req, res, next) {
 
 exports.verifyUser = async function (req, res, next) {
   const param = { ...req };
-  await userData.verifyUser(param).then(user => {
+  let user = null;
+  user = await userData.verifyUser(param);
+  try {
     if (user.length === 0) {
       return next({
         message: serverMessages.user.ERROR_NO_USER,
@@ -102,12 +107,12 @@ exports.verifyUser = async function (req, res, next) {
         success: true,
         data: data
       });
-    }).catch(err => {
-      if (err) {
-        Boom.badImplementation('Error get user data');
-      }
     });
-  });
+  } catch (err) {
+    if (err) {
+      Boom.badImplementation('Error get user data');
+    }
+  }
 };
 
 exports.logout = function (req, res) {
