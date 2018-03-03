@@ -1,8 +1,8 @@
 const winston = require('winston');
 require('winston-papertrail').Papertrail;
 const log = require('tracer').console({ format: '{{message}}  - {{file}}:{{line}}' }).log;
-const host = `logs6.papertrailapp.com`;
-const port = 29324;
+const host = ``;
+const port = '';
 
 const nodeWinstonPapertrail = new winston.transports.Papertrail({
   host: host,
